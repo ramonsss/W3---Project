@@ -1,4 +1,4 @@
-package com.example.safecard.application;
+package com.example.safecard.application.service;
 
 import java.time.LocalDate;
 import java.time.Period;

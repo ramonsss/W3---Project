@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.safecard.adapter.dto.CartaoRequestDTO;
-import com.example.safecard.application.CartaoService;
+import com.example.safecard.application.service.CartaoService;
 import com.example.safecard.domain.model.Cartao;
 
 @RestController
