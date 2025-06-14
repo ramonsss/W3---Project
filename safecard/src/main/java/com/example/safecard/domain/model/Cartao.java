@@ -1,6 +1,7 @@
 package com.example.safecard.domain.model;
-
 import java.time.LocalDate;
+
+import com.example.safecard.domain.model.enums.CartaoStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Cartao {
     private String numeroCartao;
     private String bandeira; // Visa, Mastercard, Elo
     private String tipo; // credito ou debito
-    private String status;  // solicitado, ativo, bloqueado_temporario, etc...
+    private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;
 
@@ -39,7 +40,7 @@ public class Cartao {
     public Cartao() {
     }
 
-    public Cartao(String numeroCartao, String bandeira, String tipo, String status, LocalDate dataSolicitacao,
+    public Cartao(String numeroCartao, String bandeira, String tipo, CartaoStatus status, LocalDate dataSolicitacao,
             Usuario usuario) {
         this.numeroCartao = numeroCartao;
         this.bandeira = bandeira;
@@ -87,11 +88,11 @@ public class Cartao {
         this.tipo = tipo;
     }
 
-    public String getStatus() {
+    public CartaoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CartaoStatus status) {
         this.status = status;
     }
 

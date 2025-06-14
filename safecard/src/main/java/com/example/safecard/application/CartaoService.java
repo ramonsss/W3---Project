@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Random;
 import java.util.regex.Pattern;
+import com.example.safecard.domain.model.enums.CartaoStatus;
 
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,7 @@ public class CartaoService {
         cartao.setNumeroCartao(gerarNumeroCartao());
         cartao.setTipo(tipoCartao);
         cartao.setBandeira(bandeira);
-        cartao.setStatus("SOLICITADO");
+        cartao.setStatus(CartaoStatus.SOLICITADO);
         cartao.setDataSolicitacao(LocalDate.now());
 
         // salva no banco
@@ -84,5 +85,22 @@ public class CartaoService {
                 random.nextInt(10000),
                 random.nextInt(10000),
                 random.nextInt(10000));
+    }
+
+    public void bloqueioTemporario(String numeroCartao, String cpf, String motivo) {
+        Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao);
+        if (cartao == null) {
+            throw new IllegalArgumentException("Cartão não encontrado");
+        }
+        if (!cartao.getUsuario().getCpf().equals(cpf)) {
+            throw new IllegalArgumentException("CPF não corresponde ao titular do cartão");
+        }
+        if (motivo == null || motivo.isBlank()) {
+            throw new IllegalArgumentException("Motivo do bloqueio deve ser informado");
+        }
+        cartao.setStatus(CartaoStatus.BLOQUEADO_TEMPORARIO);
+        cartao.setMotivoBloqueio(motivo);
+        cartaoRepository.save(cartao);
+
     }
 }
