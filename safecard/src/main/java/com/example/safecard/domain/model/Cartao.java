@@ -54,6 +54,8 @@ public class Cartao {
         this.possuiFaturaAberta = false;
     }
 
+
+
     // metodos gerais
     
 

@@ -4,11 +4,12 @@ import com.example.safecard.domain.model.enums.CartaoBandeira;
 import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
 
 public class CartaoRequestDTO {
+    private String numeroCartao;
     private String cpf;
     private String tipoCartao;
     private CartaoBandeira bandeira;
-    private String numeroCartao;
     private CartaoMotivoBloqueio motivoBloqueio;
+    private String senha;
 
     public String getCpf() {
         return cpf;
@@ -50,7 +51,11 @@ public class CartaoRequestDTO {
         this.motivoBloqueio = motivoBloqueio;
     }
 
-    
+    public String getSenha() {
+        return senha;
+    }
 
-    
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 }

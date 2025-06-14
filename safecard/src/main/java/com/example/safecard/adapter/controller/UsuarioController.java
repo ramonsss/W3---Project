@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.safecard.application.UsuarioService;
+import com.example.safecard.application.service.UsuarioService;
 import com.example.safecard.domain.model.Usuario;
 
 @RestController

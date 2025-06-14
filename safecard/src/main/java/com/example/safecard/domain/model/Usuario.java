@@ -83,9 +83,5 @@ public class Usuario {
     public void setCartoes(List<Cartao> cartoes) {
         this.cartoes = cartoes;
     }
-
-    public void adicionarCartao(Cartao cartao) {
-        //TODO logica
-    }
     
 }

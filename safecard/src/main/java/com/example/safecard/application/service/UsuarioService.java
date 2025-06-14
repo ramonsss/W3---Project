@@ -1,4 +1,4 @@
-package com.example.safecard.application;
+package com.example.safecard.application.service;
 
 import java.util.List;
 
