@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.safecard.domain.model.Cartao;
 import com.example.safecard.domain.model.Usuario;
+import com.example.safecard.domain.model.enums.CartaoBandeira;
+import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
+import com.example.safecard.domain.model.enums.CartaoStatus;
 import com.example.safecard.domain.model.enums.CartaoStatus;
 import com.example.safecard.infrastructure.repository.CartaoRepository;
 import com.example.safecard.infrastructure.repository.UsuarioRepository;
@@ -25,7 +28,7 @@ public class CartaoService {
     }
 
     
-    public Cartao solicitarCartao(String cpf, String tipoCartao, String bandeira) {
+    public Cartao solicitarCartao(String cpf, String tipoCartao, CartaoBandeira bandeira) {
         // buscar usuario pelo cpf
         Usuario usuario = usuarioRepository.findByCpf(cpf);
         
@@ -52,6 +55,7 @@ public class CartaoService {
         cartao.setNumeroCartao(gerarNumeroCartao());
         cartao.setTipo(tipoCartao);
         cartao.setBandeira(bandeira);
+        cartao.setStatus(CartaoStatus.SOLICITADO);
         cartao.setStatus(CartaoStatus.SOLICITADO);
         cartao.setDataSolicitacao(LocalDate.now());
 
@@ -177,5 +181,22 @@ public class CartaoService {
     public String gerarSenhaInicial() {
         Random random = new Random();
         return String.format("%06d", random.nextInt(1000000));
+    }
+
+    public void bloqueioTemporario(String numeroCartao, String cpf, CartaoMotivoBloqueio bloqueioMotivo) {
+        Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao);
+        if (cartao == null) {
+            throw new IllegalArgumentException("Cartão não encontrado");
+        }
+        if (!cartao.getUsuario().getCpf().equals(cpf)) {
+            throw new IllegalArgumentException("CPF não corresponde ao titular do cartão");
+        }
+        if (bloqueioMotivo == null) {
+            throw new IllegalArgumentException("Motivo do bloqueio deve ser informado");
+        }
+        cartao.setStatus(CartaoStatus.BLOQUEADO_TEMPORARIO);
+        cartao.setMotivoBloqueio(bloqueioMotivo);
+        cartaoRepository.save(cartao);
+
     }
 }
