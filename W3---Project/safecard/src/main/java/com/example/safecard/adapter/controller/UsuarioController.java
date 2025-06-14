@@ -1,0 +1,48 @@
+package com.example.safecard.adapter.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.safecard.application.service.UsuarioService;
+import com.example.safecard.domain.model.Usuario;
+
+@RestController
+@RequestMapping("api/usuarios")
+public class UsuarioController {
+    
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @PostMapping
+    public Usuario criarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.criarUsuario(usuario);
+    }
+
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return usuarioService.listarUsuarios();
+    }
+
+    @GetMapping("/{id}")
+    public Usuario buscaUsuarioPorId(@PathVariable Long id) {
+        return usuarioService.buscaUsuarioPorId(id); // se não tiver nenhum usuario cadastrado com esse id, ele vai retornar null
+    }
+
+    @GetMapping("/{cpf}")
+    public Usuario buscaUsuarioPorId(@PathVariable String cpf) {
+        return usuarioService.buscaUsuarioPorCpf(cpf);
+    }
+
+    @DeleteMapping("/{id}")
+    public void excluirUsuario(@PathVariable Long id) {
+        usuarioService.excluirUsuario(id);
+    }
+}
