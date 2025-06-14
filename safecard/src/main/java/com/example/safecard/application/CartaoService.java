@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Random;
 import java.util.regex.Pattern;
-import com.example.safecard.domain.model.enums.CartaoStatus;
 
 import org.springframework.stereotype.Service;
 
 import com.example.safecard.domain.model.Cartao;
 import com.example.safecard.domain.model.Usuario;
+import com.example.safecard.domain.model.enums.CartaoBandeira;
+import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
+import com.example.safecard.domain.model.enums.CartaoStatus;
 import com.example.safecard.infrastructure.repository.CartaoRepository;
 import com.example.safecard.infrastructure.repository.UsuarioRepository;
 
@@ -25,7 +27,7 @@ public class CartaoService {
     }
 
     
-    public Cartao solicitarCartao(String cpf, String tipoCartao, String bandeira) {
+    public Cartao solicitarCartao(String cpf, String tipoCartao, CartaoBandeira bandeira) {
         // buscar usuario pelo cpf
         Usuario usuario = usuarioRepository.findByCpf(cpf);
         
@@ -87,7 +89,7 @@ public class CartaoService {
                 random.nextInt(10000));
     }
 
-    public void bloqueioTemporario(String numeroCartao, String cpf, String motivo) {
+    public void bloqueioTemporario(String numeroCartao, String cpf, CartaoMotivoBloqueio bloqueioMotivo) {
         Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao);
         if (cartao == null) {
             throw new IllegalArgumentException("Cartão não encontrado");
@@ -95,11 +97,11 @@ public class CartaoService {
         if (!cartao.getUsuario().getCpf().equals(cpf)) {
             throw new IllegalArgumentException("CPF não corresponde ao titular do cartão");
         }
-        if (motivo == null || motivo.isBlank()) {
+        if (bloqueioMotivo == null) {
             throw new IllegalArgumentException("Motivo do bloqueio deve ser informado");
         }
         cartao.setStatus(CartaoStatus.BLOQUEADO_TEMPORARIO);
-        cartao.setMotivoBloqueio(motivo);
+        cartao.setMotivoBloqueio(bloqueioMotivo);
         cartaoRepository.save(cartao);
 
     }

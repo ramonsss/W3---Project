@@ -1,6 +1,8 @@
 package com.example.safecard.domain.model;
 import java.time.LocalDate;
 
+import com.example.safecard.domain.model.enums.CartaoBandeira;
+import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
 import com.example.safecard.domain.model.enums.CartaoStatus;
 
 import jakarta.persistence.Entity;
@@ -18,14 +20,14 @@ public class Cartao {
     private Long id;
 
     private String numeroCartao;
-    private String bandeira; // Visa, Mastercard, Elo
+    private CartaoBandeira bandeira; // Visa, Mastercard, Elo
     private String tipo; // credito ou debito
     private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;
 
     private double limite;
-    private String motivoBloqueio;
+    private CartaoMotivoBloqueio motivoBloqueio;
     private String motivoCancelamento;
 
     private String senhaHash;
@@ -40,7 +42,7 @@ public class Cartao {
     public Cartao() {
     }
 
-    public Cartao(String numeroCartao, String bandeira, String tipo, CartaoStatus status, LocalDate dataSolicitacao,
+    public Cartao(String numeroCartao, CartaoBandeira bandeira, String tipo, CartaoStatus status, LocalDate dataSolicitacao,
             Usuario usuario) {
         this.numeroCartao = numeroCartao;
         this.bandeira = bandeira;
@@ -72,11 +74,11 @@ public class Cartao {
         this.numeroCartao = numeroCartao;
     }
 
-    public String getBandeira() {
+    public CartaoBandeira getBandeira() {
         return bandeira;
     }
 
-    public void setBandeira(String bandeira) {
+    public void setBandeira(CartaoBandeira bandeira) {
         this.bandeira = bandeira;
     }
 
@@ -120,11 +122,11 @@ public class Cartao {
         this.limite = limite;
     }
 
-    public String getMotivoBloqueio() {
+    public CartaoMotivoBloqueio getMotivoBloqueio() {
         return motivoBloqueio;
     }
 
-    public void setMotivoBloqueio(String motivoBloqueio) {
+    public void setMotivoBloqueio(CartaoMotivoBloqueio motivoBloqueio) {
         this.motivoBloqueio = motivoBloqueio;
     }
 
