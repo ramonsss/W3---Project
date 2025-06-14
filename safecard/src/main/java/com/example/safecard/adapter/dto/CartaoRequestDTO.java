@@ -8,7 +8,6 @@ public class CartaoRequestDTO {
     private String cpf;
     private String tipoCartao;
     private CartaoBandeira bandeira;
-    private String numeroCartao;
     private CartaoMotivoBloqueio motivoBloqueio;
     private String senha;
 
@@ -50,18 +49,6 @@ public class CartaoRequestDTO {
 
     public void setMotivoBloqueio(CartaoMotivoBloqueio motivoBloqueio) {
         this.motivoBloqueio = motivoBloqueio;
-    }
-
-    
-
-    
-
-    public String getNumeroCartao() {
-        return numeroCartao;
-    }
-
-    public void setNumeroCartao(String numeroCartao) {
-        this.numeroCartao = numeroCartao;
     }
 
     public String getSenha() {

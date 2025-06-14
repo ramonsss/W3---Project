@@ -5,8 +5,6 @@ import com.example.safecard.domain.model.enums.CartaoBandeira;
 import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
 import com.example.safecard.domain.model.enums.CartaoStatus;
 
-import com.example.safecard.domain.model.enums.CartaoStatus;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +22,6 @@ public class Cartao {
     private String numeroCartao;
     private CartaoBandeira bandeira; // Visa, Mastercard, Elo
     private String tipo; // credito ou debito
-    private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
     private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;
@@ -45,7 +42,6 @@ public class Cartao {
     public Cartao() {
     }
 
-    public Cartao(String numeroCartao, String bandeira, String tipo, CartaoStatus status, LocalDate dataSolicitacao,
     public Cartao(String numeroCartao, CartaoBandeira bandeira, String tipo, CartaoStatus status, LocalDate dataSolicitacao,
             Usuario usuario) {
         this.numeroCartao = numeroCartao;
@@ -57,6 +53,8 @@ public class Cartao {
         this.senhaCadastrada = false;
         this.possuiFaturaAberta = false;
     }
+
+
 
     // metodos gerais
     
@@ -95,11 +93,9 @@ public class Cartao {
     }
 
     public CartaoStatus getStatus() {
-    public CartaoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CartaoStatus status) {
     public void setStatus(CartaoStatus status) {
         this.status = status;
     }

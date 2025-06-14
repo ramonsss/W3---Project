@@ -12,7 +12,6 @@ import com.example.safecard.domain.model.Usuario;
 import com.example.safecard.domain.model.enums.CartaoBandeira;
 import com.example.safecard.domain.model.enums.CartaoMotivoBloqueio;
 import com.example.safecard.domain.model.enums.CartaoStatus;
-import com.example.safecard.domain.model.enums.CartaoStatus;
 import com.example.safecard.infrastructure.repository.CartaoRepository;
 import com.example.safecard.infrastructure.repository.UsuarioRepository;
 
