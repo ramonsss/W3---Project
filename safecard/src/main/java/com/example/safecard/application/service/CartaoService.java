@@ -198,4 +198,26 @@ public class CartaoService {
         cartaoRepository.save(cartao);
 
     }
+
+    public void cancelamentoDefinitivo(String numeroCartao, String cpf, CartaoMotivoBloqueio bloqueioMotivo) {
+        Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao);
+        if (cartao == null) {
+            throw new IllegalArgumentException("Cartão não encontrado");
+        }
+        if (!cartao.getUsuario().getCpf().equals(cpf)) {
+            throw new IllegalArgumentException("CPF não corresponde ao titular do cartão");
+        }
+        if (bloqueioMotivo == null) {
+            throw new IllegalArgumentException("Motivo do cancelamento deve ser informado");
+        }
+        if (cartao.getStatus() == CartaoStatus.CANCELADO) {
+            throw new IllegalStateException("Cartão já está cancelado");
+        }
+        if (cartao.isPossuiFaturaAberta()) {
+            throw new IllegalArgumentException("Cartão não pode ser cancelado por possuir fatura em aberto");
+        }
+        cartao.setStatus(CartaoStatus.CANCELADO);
+        cartao.setMotivoBloqueio(bloqueioMotivo);
+        cartaoRepository.save(cartao);
+    }
 }
