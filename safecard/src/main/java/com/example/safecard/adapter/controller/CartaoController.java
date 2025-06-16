@@ -2,7 +2,6 @@ package com.example.safecard.adapter.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,6 @@ public class CartaoController {
 
     private final CartaoService cartaoService;
 
-    @Autowired
     public CartaoController(CartaoService cartaoService) {
         this.cartaoService = cartaoService;
     }
@@ -76,7 +74,8 @@ public class CartaoController {
 
     // Bloqueio temporário
     @PatchMapping("/{numeroCartao}/bloqueio-temporario")
-    public ResponseEntity<String> bloqueioTemporario(@PathVariable String numeroCartao, @RequestBody CartaoRequestDTO dto) {
+    public ResponseEntity<String> bloqueioTemporario(@PathVariable String numeroCartao,
+            @RequestBody CartaoRequestDTO dto) {
         try {
             cartaoService.bloqueioTemporario(numeroCartao, dto.getCpf(), dto.getMotivoBloqueio());
             return ResponseEntity.ok("Cartão bloqueado temporariamente com sucesso.");
