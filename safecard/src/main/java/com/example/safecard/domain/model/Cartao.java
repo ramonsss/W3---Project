@@ -21,7 +21,7 @@ public class Cartao {
 
     private String numeroCartao;
     private CartaoBandeira bandeira; // Visa, Mastercard, Elo
-    private String tipo; // credito ou debito
+    private String tipo; // credito ou debito (platinum, goild, black)
     private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;

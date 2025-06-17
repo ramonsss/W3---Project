@@ -123,7 +123,7 @@ public class CartaoService {
     
     public String gerarNumeroCartao() {
         Random random = new Random();
-        return String.format("%04d-%04d-%04d-%04d",
+        return String.format("%04d%04d%04d%04d",
                 random.nextInt(10000),
                 random.nextInt(10000),
                 random.nextInt(10000),
