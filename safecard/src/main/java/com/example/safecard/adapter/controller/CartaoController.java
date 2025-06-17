@@ -37,7 +37,20 @@ public class CartaoController {
         }
     }
 
-    // Listar cartões
+    @PatchMapping("/bloqueio")
+    public ResponseEntity<String> bloqueioTemporario(@RequestBody CartaoRequestDTO dto) {
+        try {
+            cartaoService.bloqueioTemporario(dto.getNumeroCartao(), dto.getCpf(), dto.getMotivoBloqueio());
+            return ResponseEntity.ok("Cartão bloqueado temporariamente com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Dados inválidos para bloqueio do cartão: " + e.getMessage());
+        } catch (org.springframework.dao.DataAccessException e) {
+            return ResponseEntity.status(500).body("Erro ao acessar o banco de dados: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro inesperado ao bloquear o cartão: " + e.getMessage());
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Cartao>> listarCartoes() {
         try {
@@ -85,6 +98,22 @@ public class CartaoController {
             return ResponseEntity.status(500).body("Erro ao acessar o banco de dados: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro inesperado ao bloquear o cartão: " + e.getMessage());
+        }
+    }
+
+    // Cancelamento definitivo
+    @PatchMapping("/{numeroCartao}/cancelar")
+    public ResponseEntity<String> cancelarCartao(@PathVariable String numeroCartao,
+            @RequestBody CartaoRequestDTO dto) {
+        try {
+            cartaoService.cancelamentoDefinitivo(numeroCartao, dto.getCpf(), dto.getMotivoBloqueio());
+            return ResponseEntity.ok("Cartão cancelado definitivamente com sucesso.");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body("Erro ao cancelar cartão: " + e.getMessage());
+        } catch (org.springframework.dao.DataAccessException e) {
+            return ResponseEntity.status(500).body("Erro ao acessar o banco de dados: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro inesperado ao cancelar o cartão: " + e.getMessage());
         }
     }
 

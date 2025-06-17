@@ -9,5 +9,4 @@ public enum CartaoStatus {
     BLOQUEADO_PERDA_ROUBO,
     CANCELADO,
     EM_ANALISE;
-
 }

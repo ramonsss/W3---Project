@@ -71,7 +71,15 @@ public class CartaoService {
     }
 
     public Cartao pesquisarCartaoPeloNumero(String numeroCartao) {
-        return cartaoRepository.findByNumeroCartao(numeroCartao);
+        String numeroCartaoLimpo = numeroCartao.replaceAll("[^\\d]", "");
+        List<Cartao> cartoes = cartaoRepository.findAll();
+        for (Cartao c : cartoes) {
+            String cNumeroLimpo = c.getNumeroCartao().replaceAll("[^\\d]", "");
+            if (cNumeroLimpo.equals(numeroCartaoLimpo)) {
+                return c;
+            }
+        }
+        return null;
     }
     
     private boolean validarCpf(String cpf) {

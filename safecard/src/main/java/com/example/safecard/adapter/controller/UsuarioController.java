@@ -25,8 +25,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.criarUsuario(usuario);
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+        Usuario criado = usuarioService.criarUsuario(usuario);
+        if (criado == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(criado);
     }
 
     @GetMapping
