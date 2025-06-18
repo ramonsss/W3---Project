@@ -2,7 +2,7 @@ package com.example.safecard.adapter.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +15,14 @@ import com.example.safecard.application.service.UsuarioService;
 import com.example.safecard.domain.model.Usuario;
 
 @RestController
-@RequestMapping("api/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
-    
-    @Autowired
-    private UsuarioService usuarioService;
+
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @PostMapping
     public Usuario criarUsuario(@RequestBody Usuario usuario) {
@@ -32,17 +35,26 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public Usuario buscaUsuarioPorId(@PathVariable Long id) {
-        return usuarioService.buscaUsuarioPorId(id); // se não tiver nenhum usuario cadastrado com esse id, ele vai retornar null
+    public ResponseEntity<Usuario> buscaUsuarioPorId(@PathVariable Long id) {
+        Usuario usuario = usuarioService.buscaUsuarioPorId(id);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(usuario);
     }
 
-    @GetMapping("/{cpf}")
-    public Usuario buscaUsuarioPorId(@PathVariable String cpf) {
+    @GetMapping("/cpf/{cpf}")
+    public Usuario buscaUsuarioPorCpf(@PathVariable String cpf) {
         return usuarioService.buscaUsuarioPorCpf(cpf);
     }
 
     @DeleteMapping("/{id}")
-    public void excluirUsuario(@PathVariable Long id) {
-        usuarioService.excluirUsuario(id);
+    public ResponseEntity<String> excluirUsuario(@PathVariable Long id) {
+        try {
+            usuarioService.excluirUsuario(id);
+            return ResponseEntity.ok("Usuário excluído com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao excluir usuário: " + e.getMessage());
+        }
     }
 }
