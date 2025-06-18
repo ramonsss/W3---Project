@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 @Entity
 public class Cartao {
@@ -20,14 +22,23 @@ public class Cartao {
     private Long id;
 
     private String numeroCartao;
+
+    @Enumerated(EnumType.STRING)
     private CartaoBandeira bandeira; // Visa, Mastercard, Elo
+
     private String tipo; // credito ou debito
+
+    @Enumerated(EnumType.STRING)
     private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
+
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;
 
     private double limite;
+
+    @Enumerated(EnumType.STRING)
     private CartaoMotivoBloqueio motivoBloqueio;
+
     private String motivoCancelamento;
 
     private String senhaHash;

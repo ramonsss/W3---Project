@@ -37,20 +37,6 @@ public class CartaoController {
         }
     }
 
-    @PatchMapping("/bloqueio")
-    public ResponseEntity<String> bloqueioTemporario(@RequestBody CartaoRequestDTO dto) {
-        try {
-            cartaoService.bloqueioTemporario(dto.getNumeroCartao(), dto.getCpf(), dto.getMotivoBloqueio());
-            return ResponseEntity.ok("Cartão bloqueado temporariamente com sucesso.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("Dados inválidos para bloqueio do cartão: " + e.getMessage());
-        } catch (org.springframework.dao.DataAccessException e) {
-            return ResponseEntity.status(500).body("Erro ao acessar o banco de dados: " + e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro inesperado ao bloquear o cartão: " + e.getMessage());
-        }
-    }
-
     @GetMapping
     public ResponseEntity<List<Cartao>> listarCartoes() {
         try {
