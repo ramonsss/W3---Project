@@ -239,4 +239,27 @@ public class CartaoService {
         }
 
     }
+     public Request aumento_limite(String justificativa,double valor,String cpf,String numeroCartao){
+        Usuario usuario = usuarioRepository.findByCpf(cpf);
+        Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao);
+
+        if(cartao == null) {
+            throw new IllegalArgumentException("este cartao nao existe ");
+        }
+        if(usuario == null) {
+            throw new IllegalArgumentException("este usuario nao existe ");
+        }
+        if(cartao.getStatus() != CartaoStatus.ATIVO) {
+            throw new IllegalArgumentException("o cartao desejado nao esta ativo");
+
+        }
+
+        Request request = new Request();
+        request.setNumeroCartao(numeroCartao);
+        request.setJustificativa(justificativa);
+        request.setValor(valor);
+        request.setCpf(justificativa);
+
+        return  requestRepository.save(request);
+    }
 }
