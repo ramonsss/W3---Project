@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 @Entity
 public class Cartao {
@@ -22,7 +24,11 @@ public class Cartao {
     private Long id;
 
     private String numeroCartao;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 13ce0e0d9293855d1259be8ec85d7f330f400327
     @Enumerated(EnumType.STRING)
     private CartaoBandeira bandeira; // Visa, Mastercard, Elo
 
@@ -30,6 +36,7 @@ public class Cartao {
 
     @Enumerated(EnumType.STRING)
     private CartaoStatus status;  // solicitado, ativo, bloqueado_temporario, etc...
+
     private LocalDate dataSolicitacao;
     private LocalDate dataAtivacao;
 
@@ -37,7 +44,11 @@ public class Cartao {
 
     @Enumerated(EnumType.STRING)
     private CartaoMotivoBloqueio motivoBloqueio;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 13ce0e0d9293855d1259be8ec85d7f330f400327
     private String motivoCancelamento;
 
     private String senhaHash;

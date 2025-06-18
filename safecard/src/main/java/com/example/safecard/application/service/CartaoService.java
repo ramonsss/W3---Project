@@ -55,7 +55,6 @@ public class CartaoService {
         cartao.setTipo(tipoCartao);
         cartao.setBandeira(bandeira);
         cartao.setStatus(CartaoStatus.SOLICITADO);
-        cartao.setStatus(CartaoStatus.SOLICITADO);
         cartao.setDataSolicitacao(LocalDate.now());
 
         // salva no banco
