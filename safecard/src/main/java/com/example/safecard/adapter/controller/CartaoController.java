@@ -1,8 +1,11 @@
 package com.example.safecard.adapter.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,11 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.safecard.adapter.dto.CartaoRequestDTO;
 import com.example.safecard.application.service.CartaoService;
 import com.example.safecard.domain.model.Cartao;
+
 
 @RestController
 @RequestMapping("/api/cartoes")
@@ -25,6 +30,21 @@ public class CartaoController {
     public CartaoController(CartaoService cartaoService) {
         this.cartaoService = cartaoService;
     }
+
+    //TODO # -------        ajeitar isso em uma service certa       ---------- #
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
+    @GetMapping("/send")
+    public ResponseEntity<?> send() {
+        kafkaTemplate.send("topic-1", "Envio de: " + LocalDateTime.now());
+        return ResponseEntity.ok().build();
+    }
+    //#------------------------------------------------------------------------------#
 
     // Criar cartão
     @PostMapping
