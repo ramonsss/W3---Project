@@ -51,17 +51,21 @@ O sistema processa arquivos `.IN` contendo múltiplos registros de bloqueios de 
 ## 📁 Estrutura do Projeto (Clean Architecture)
 
 ```
-src/  
-├── domain/  
-│   ├── model/  
-│   └── services/  
-├── application/  
-│   └── usecases/  
-├── infrastructure/  
-│   ├── persistence/  
-│   └── batch/  
-└── interfaces/  
-    └── controllers/  
+safecard/
+├── src/
+│ ├── main/
+│ │ ├── java/com/example/safecard/
+│ │ │ ├── adapter/controller/
+│ │ │ ├── adapter/dto/
+│ │ │ ├── application/config/
+│ │ │ ├── application/service/
+│ │ │ ├── domain/model/
+│ │ │ └── infrastructure/repository/
+│ │ └── resources/
+│ └── test/
+│ └── java/com/example/safecard/
+├── pom.xml
+└── README.md
 ```
 
 ---
